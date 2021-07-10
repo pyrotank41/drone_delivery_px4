@@ -3,17 +3,18 @@
 import asyncio
 
 from lib.delivery_lib import *
+from connection_param import *
 
 async def mission():
     
-    drone = await init_drone("udp://:14540")
+    drone = await init_drone(connection_string)
     # drone = await init_drone("serial:////dev/ttyACM0") # for connecting to actual hardware.
-    await drone.action.set_maximum_speed(10) # m/sec
+    await drone.action.set_maximum_speed(maximum_land_speed) # m/sec
     
-    await init_ros(camera_topic='/solo/pi_cam_v2/image_raw')
+    await init_ros(camera_topic=ros_camera_topic)
 
     # deliver test long distance
-    await deliver(drone, 47.39768958423579, 8.545531845401872, alt=20, verbose=True)
+    await deliver(drone, 47.39768958423579, 8.545531845401872, location_offset_meters=False, alt=5, verbose=True)
 
     await close_ros()
     print("-- Done")

@@ -324,7 +324,7 @@ async def precision_land(drone,yaw=0, verbose=False):
 
     thrust = 0.50 #%
     Kp = 0.001
-    Kd = 0.05
+    Kd = 0.04
 
     #--- we need to use off board mode to controll the yaw, pitch roll 
     print("-- Setting initial setpoint")
@@ -432,12 +432,8 @@ async def deliver(drone, dNorth, dEast, location_offset_meters=True, verbose=Fal
     await simple_takeoff(drone)
     #recording current location to return to after delivery
     home_location_global = await get_position(drone)
-    if location_offset_meters: await simple_goto_meters(drone, dNorth, dEast, 
-                                                    get_altitude_absolute(), 
-                                                    verbose=verbose)
-    else:                  await simple_goto_global(drone, dNorth, dEast, 
-                                                    get_altitude_absolute, 
-                                                    verbose=verbose)
+    if location_offset_meters: await simple_goto_meters(drone, dNorth, dEast, get_altitude_absolute(), verbose=verbose)
+    else:                      await simple_goto_global(drone, dNorth, dEast, get_altitude_absolute(), verbose=verbose)
     await precision_land(drone)
     await asyncio.sleep(1)
     print("\n--- package delivered ---\n")
@@ -445,13 +441,8 @@ async def deliver(drone, dNorth, dEast, location_offset_meters=True, verbose=Fal
 
     await arm_drone(drone)
     await simple_takeoff(drone)
-    if location_offset_meters: await  simple_goto_meters(drone, -dNorth, -dEast, 
-                                                    get_altitude_absolute(),
-                                                    verbose=verbose)
-    else:                  await simple_goto_meters(drone, 
-                            home_location_global.latitude_deg, 
-                            home_location_global.longitude_deg, 
-                            get_altitude_absolute(), verbose=verbose)
+    if location_offset_meters: await simple_goto_meters(drone, -dNorth, -dEast, get_altitude_absolute(), verbose=verbose)
+    else:                      await simple_goto_global(drone, home_location_global.latitude_deg, home_location_global.longitude_deg, get_altitude_absolute(), verbose=verbose)
     await precision_land(drone)
     print("\n--- mission complete ---\n")
 
