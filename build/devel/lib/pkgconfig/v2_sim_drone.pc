@@ -1,0 +1,8 @@
+prefix=/home/karan-vm/catkin_ws/src/sim_drone/build/devel
+
+Name: v2_sim_drone
+Description: Description of v2_sim_drone
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/karan-vm/catkin_ws/src/sim_drone/build/devel/setup.sh

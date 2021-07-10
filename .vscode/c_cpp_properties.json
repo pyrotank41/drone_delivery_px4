@@ -1,0 +1,22 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/karan-vm/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/karan-vm/catkin_ws/src/mavros/libmavconn/include/**",
+        "/home/karan-vm/catkin_ws/src/mavros/mavros/include/**",
+        "/home/karan-vm/catkin_ws/src/mavros/mavros_msgs/include/**",
+        "/home/karan-vm/catkin_ws/src/sim_drone/include/**",
+        "/home/karan-vm/catkin_ws/src/mavros/test_mavros/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
