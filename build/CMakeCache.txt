@@ -148,7 +148,7 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=v2_sim_drone
+CMAKE_PROJECT_NAME:STATIC=drone_delivery_px4
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/ranlib
@@ -270,6 +270,12 @@ _gtest_SOURCES:FILEPATH=/usr/src/gtest/src/gtest.cc
 
 //The directory containing a CMake configuration file for catkin.
 catkin_DIR:PATH=/opt/ros/melodic/share/catkin/cmake
+
+//Value Computed by CMake
+drone_delivery_px4_BINARY_DIR:STATIC=/home/karan-vm/catkin_ws/src/sim_drone/build
+
+//Value Computed by CMake
+drone_delivery_px4_SOURCE_DIR:STATIC=/home/karan-vm/catkin_ws/src/sim_drone
 
 //Value Computed by CMake
 gmock_BINARY_DIR:STATIC=/home/karan-vm/catkin_ws/src/sim_drone/build/gtest/googlemock
