@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: v2_sim_drone
-Description: Description of v2_sim_drone
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
