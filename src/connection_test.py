@@ -7,7 +7,8 @@ from connection_param import *
 
 async def mission():
     
-    drone = await init_drone(connection_string)
+    drone = await init_drone(connection_string, mavsdk_server_address=mav_server_address, port=mav_server_port
+    ), 
 
     await drone.action.set_maximum_speed(maximum_land_speed) # m/sec
     

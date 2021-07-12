@@ -20,7 +20,7 @@ import time
 from mavsdk import System
 from mavsdk.offboard import (Attitude, OffboardError)
 
-from lib.aruco_tracker_lib import *
+from aruco_tracker_lib import *
 
 # VARIABLES -----------------------------------------------------------------------------
 
@@ -138,9 +138,12 @@ async def close_ros():
     _cam_topic_sub.unregister()
 
 
-async def init_drone(system_address):
+async def init_drone(system_address, mavsdk_server_address=None, port=None):
     
-    drone = System()
+    if mavsdk_server_address is None:
+        drone = System()
+    else:
+        drone = System(mavsdk_server_address='localhost', port=50051)
  
     #--- connecting to the drone 
     await drone.connect(system_address=system_address)
