@@ -20,7 +20,7 @@ import time
 from mavsdk import System
 from mavsdk.offboard import (Attitude, OffboardError)
 
-from aruco_tracker_lib import *
+from lib.aruco_tracker_lib import *
 
 # VARIABLES -----------------------------------------------------------------------------
 
@@ -140,12 +140,16 @@ async def close_ros():
 
 async def init_drone(system_address, mavsdk_server_address=None, port=None):
     
+    drone = None
+
     if mavsdk_server_address is None:
         drone = System()
+        await drone.connect(system_address=system_address)
+        #--- connecting to the drone 
     else:
-        drone = System(mavsdk_server_address='localhost', port=50051)
- 
-    #--- connecting to the drone 
+        drone = System(mavsdk_server_address='localhost', port=port)
+        await drone.connect()
+    
     await drone.connect(system_address=system_address)
 
     print("Waiting for drone to connect...")
