@@ -4,6 +4,7 @@
 # from mavsdk.offboard_pb2 import AccelerationNed, VelocityNedYaw
 # from numpy.core.numeric import roll
 
+import mavsdk
 import rospy
 from sensor_msgs.msg import Image
 import ros_numpy as rnp # to convert numpy array top ros msg and vise versa
@@ -38,7 +39,7 @@ _x_error_deg = _y_error_deg = 0
 _x_error = 0
 _y_error = 0 
 
-_takeoff_altitude = 0
+_takeoff_altitude = 1
 
 _previous_land_velocity_state = -1
 _previous_land_velocity = 0
@@ -138,20 +139,12 @@ async def close_ros():
     _cam_topic_sub.unregister()
 
 
-async def init_drone(system_address, mavsdk_server_address=None, port=None):
-    
-    drone = None
+async def init_drone(system_address='udp://:14540'):
 
-    if mavsdk_server_address is None:
-        drone = System()
-        await drone.connect(system_address=system_address)
-        #--- connecting to the drone 
-    else:
-        drone = System(mavsdk_server_address='localhost', port=port)
-        await drone.connect()
-    
+    drone = System()
+    #--- connecting to the drone 
     await drone.connect(system_address=system_address)
-
+  
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():
         if state.is_connected:
@@ -180,17 +173,21 @@ async def disarm_drone(drone):
             break
 
 async def simple_takeoff(drone, verbose=False):
+
+    #-- setup
     takeoff_altitude = await get_takeoff_altitude() # meters
-
     await drone.action.set_takeoff_altitude(takeoff_altitude)
-    await drone.action.takeoff()
+    
+    #-- main work
     print("-- Taking off")
-
+    await drone.action.takeoff()
+    
     async for position in drone.telemetry.position():
         if position.relative_altitude_m >= (takeoff_altitude-0.5):
             if verbose:print(f"reached takeoff altitude {position.relative_altitude_m}")
             break 
-    
+    #-- end work
+    # updating the current position or the drone.
     await set_position(drone)
 
 

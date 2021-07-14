@@ -1,32 +1,34 @@
 #!/usr/bin/env python3
 
 import asyncio
+import connection_param as param
 
 from lib.delivery_lib import *
-from connection_param import *
+
 
 async def mission():
-    
-    drone = await init_drone(connection_string, mavsdk_server_address=mav_server_address, port=mav_server_port)
 
-    await drone.action.set_maximum_speed(maximum_land_speed) # m/sec
-    
-    await init_ros(camera_topic=ros_camera_topic)
+    try:
+        # initializing drone
+        drone = await init_drone(system_address=param.connection_string)
+        await drone.action.set_maximum_speed(param.maximum_speed_with_respect_to_land) # m/sec
+        # initializing ros node (and aruco publisher) and subscribing to the camera topic
+        await init_ros(camera_topic=param.ros_camera_topic)
 
-    await print_drone_info(drone)
-    
-    await arm_drone(drone)
-    # await simple_takeoff_and_land(drone, alt=2)
-    await asyncio.sleep(1)
+        # test specific code...
+        await print_drone_info(drone)
+        await arm_drone(drone)
+        await disarm_drone(drone)
+        print("-- Done")
 
-    await disarm_drone(drone)
+    except Exception as e:
+        print(e)
 
     await close_ros()
-    print("-- Done")
-
-
 
 if __name__ == "__main__":
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(mission())
+    print("event loop complete")
+   
