@@ -39,7 +39,7 @@ class ArucoTracker():
         #--- Font for image text
         self.font = cv2.FONT_HERSHEY_PLAIN
 
-    def track(self, frame, id_to_find, marker_size, alt, verbose=False, show_video=False):
+    def track(self, frame, id_to_find, marker_size, alt, verbose=False, show_video=False, print_id=False):
         x = y = z = 0.0
         x_error_angle = y_error_angle = 0
         marker_found = False
